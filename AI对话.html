@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灰灰英语小课堂 - AI对话练习</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .typing {
+            animation: typing 1s steps(30) infinite;
+        }
+        
+        @keyframes typing {
+            0% { border-right: 2px solid transparent; }
+            50% { border-right: 2px solid #666; }
+            100% { border-right: 2px solid transparent; }
+        }
+
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+            width: 1.2em;
+            display: inline-block;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .message-translation {
+            margin-top: 0.5rem;
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .message-text {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <span class="site-name">灰灰英语小课堂</span>
+        </div>
+        <button onclick="window.location.href='study.html'" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back
+        </button>
+    </nav>
+
+    <!-- 聊天区域 -->
+    <main class="chat-container">
+        <!-- 聊天记录 -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- AI欢迎消息 -->
+            <div class="message ai-message">
+                <div class="message-content">
+                    <div class="message-text">
+                        Hello! I'm your English conversation assistant. Let's practice English together! 
+                        <span class="message-translation">
+                            （你好！我是你的英语对话助手。让我们一起练习英语吧！）
+                        </span>
+                    </div>
+                </div>
+                <div class="message-time"></div>
+            </div>
+        </div>
+
+        <!-- 输入区域 -->
+        <div class="chat-input-area">
+            <form id="chatForm" onsubmit="return sendMessage(event)">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Type your message here..." 
+                    autocomplete="off"
+                >
+                <button type="submit" class="send-btn" id="sendButton">
+                    Send
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/ai-config.js"></script>
+    <script src="js/ai-service.js"></script>
+    <script src="js/chat-ui.js"></script>
+    <script>
+        // 初始化
+        const apiKey = 'sk-f562433547d3440bbb8c40cfd6f05462';
+        const chatUI = new ChatUI(
+            document.getElementById('chatMessages'),
+            document.getElementById('messageInput'),
+            document.getElementById('sendButton')
+        );
+        const aiService = new AIService(AI_CONFIG, apiKey);
+
+        // 处理发送消息
+        async function sendMessage(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message || document.getElementById('sendButton').disabled) {
+                return false;
+            }
+
+            // 显示用户消息
+            chatUI.addMessage(message, 'user');
+            input.value = '';
+            
+            // 显示加载状态
+            chatUI.setLoading(true);
+            let loadingMessage = document.querySelector('.message.ai-message:last-child');
+            
+            try {
+                // 发送请求
+                const response = await aiService.qwenRequest(message, AI_CONFIG.prompts.chat);
+                
+                // 移除加载消息
+                if (loadingMessage) {
+                    loadingMessage.remove();
+                }
+
+                // 处理响应
+                let aiResponse;
+                try {
+                    aiResponse = JSON.parse(response);
+                    if (!aiResponse.english || !aiResponse.chinese) {
+                        throw new Error('Invalid response format');
+                    }
+                } catch (e) {
+                    console.error('解析响应失败:', e);
+                    throw new Error('Failed to parse response');
+                }
+
+                // 添加AI回复
+                addMessageWithTranslation(
+                    aiResponse.english,
+                    aiResponse.chinese,
+                    'ai'
+                );
+
+            } catch (error) {
+                console.error('请求失败:', error);
+                
+                // 移除加载消息
+                if (loadingMessage) {
+                    loadingMessage.remove();
+                }
+
+                // 显示错误��息
+                addMessageWithTranslation(
+                    "I'm having trouble understanding. Could you try again?",
+                    "抱歉，我理解有困难。能请你重试一次吗？",
+                    'ai'
+                );
+            } finally {
+                chatUI.setLoading(false);
+            }
+            
+            return false;
+        }
+
+        // 添加带翻译的消息
+        function addMessageWithTranslation(text, translation, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            const textDiv = document.createElement('div');
+            textDiv.className = 'message-text';
+            textDiv.textContent = text;
+            
+            const translationDiv = document.createElement('div');
+            translationDiv.className = 'message-translation';
+            translationDiv.textContent = translation;
+            
+            contentDiv.appendChild(textDiv);
+            contentDiv.appendChild(translationDiv);
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = chatUI.formatTime();
+            
+            messageDiv.appendChild(contentDiv);
+            messageDiv.appendChild(timeDiv);
+            
+            document.getElementById('chatMessages').appendChild(messageDiv);
+            chatUI.scrollToBottom();
+            
+            return messageDiv;
+        }
+    </script>
+</body>
+</html> 

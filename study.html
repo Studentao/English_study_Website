@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>学习中心</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/study.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script>
+        // 检查登录状态
+        (function checkLogin() {
+            if (!sessionStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+            }
+            // 显示用户名
+            const userNameElement = document.querySelector('.user-name');
+            if (userNameElement) {
+                userNameElement.textContent = sessionStorage.getItem('username') || 'admin';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <span class="site-name">灰灰英语小课堂</span>
+        </div>
+        <div class="nav-user">
+            <div class="user-info">
+                <span class="user-name">admin</span>
+            </div>
+            <button onclick="handleLogout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                退出
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="main-content">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="progress-card">
+                <h3>今日学习</h3>
+                <div class="progress-circle">
+                    <span class="progress-number">75%</span>
+                </div>
+                <p>目标：30分钟</p>
+                <p>已完成：22分钟</p>
+            </div>
+            <div class="study-stats">
+                <div class="stat-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="stat-info">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">连���打卡</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-book-reader"></i>
+                    <div class="stat-info">
+                        <span class="stat-number">258</span>
+                        <span class="stat-label">已学单词</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 课程内容区 -->
+        <section class="content-area">
+            <header class="content-header">
+                <div class="view-options"
+                    <button class="view-btn">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="course-grid">
+                <!-- AI对话课程卡片 -->
+                <article class="course-card">
+                    <div class="course-image">
+                        <img src="image/dialogue.jpg" alt="AI对话课程">
+                    </div>
+                    <div class="course-content">
+                        <h3>AI英语对话</h3>
+                        <button class="start-btn" onclick="window.location.href='AI对话.html'">
+                            <i class="fas fa-comments"></i>
+                            开始对话
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 单词学习卡片 -->
+                <article class="course-card">
+                    <div class="course-image">
+                        <img src="image/vocabulary.jpg" alt="单词学习">
+                    </div>
+                    <div class="course-content">
+                        <h3>记单词</h3>
+                        <button class="start-btn" onclick="window.location.href='vocabulary.html'">
+                            <i class="fas fa-book"></i>
+                            开始背词
+                        </button>
+                    </div>
+                </article>
+
+                <!-- AI提问卡片 -->
+                <article class="course-card">
+                    <div class="course-image">
+                        <img src="image/question.jpg" alt="AI提问">
+                    </div>
+                    <div class="course-content">
+                        <h3>AI提问</h3>
+                        <button class="start-btn" onclick="window.location.href='ai-qa.html'">
+                            <i class="fas fa-question-circle"></i>
+                            开始提问
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- 引入字体图标和脚本 -->
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+    <script>
+        function handleLogout() {
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('username');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灰灰英语小课堂 - 单词学习</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/vocabulary.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script>
+        // 检查登录状态
+        (function checkLogin() {
+            if (!sessionStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <span class="site-name">灰灰英语小课堂</span>
+        </div>
+        <button onclick="window.location.href='study.html'" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            返回
+        </button>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="vocabulary-container">
+        <!-- 单词卡片 -->
+        <div class="word-card">
+            <div class="word-progress">
+                <span>10/20</span>
+            </div>
+            <div class="word-content">
+                <h2 class="word">appreciate</h2>
+                <p class="phonetic">/əˈpriːʃieɪt/</p>
+                <div class="controls">
+                    <button class="sound-btn">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="meaning hidden">
+                    <p class="chinese">欣赏；感激</p>
+                    <p class="example">I really appreciate your help.</p>
+                    <p class="example-cn">我真的很感激你的帮助。</p>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn show-meaning">
+                    <i class="fas fa-eye"></i>
+                    显示释义
+                </button>
+                <button class="action-btn next-word">
+                    <i class="fas fa-forward"></i>
+                    下一个
+                </button>
+            </div>
+        </div>
+
+        <!-- 学习进度 -->
+        <div class="study-progress">
+            <div class="progress-stats">
+                <div class="stat">
+                    <span class="stat-label">今日已学</span>
+                    <span class="stat-value">10</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">待复习</span>
+                    <span class="stat-value">5</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">掌握</span>
+                    <span class="stat-value">128</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 单词数据
+        const vocabularyList = [
+            {
+                word: "alter",
+                phonetic: "/ˈɔːltə/",
+                meaning: "改变，改动，变更",
+                type: "v.",
+                example: "We need to alter our plans.",
+                exampleCn: "我们需要改变我们的计划。"
+            },
+            {
+                word: "burst",
+                phonetic: "/bɜːst/",
+                meaning: "突然发生，爆裂",
+                type: "vi., n.",
+                example: "The balloon burst suddenly.",
+                exampleCn: "气球突然爆了。"
+            },
+            {
+                word: "dispose",
+                phonetic: "/dɪˈspəʊz/",
+                meaning: "除掉；处置；解决；处理(of)",
+                type: "vi.",
+                example: "How will you dispose of this waste?",
+                exampleCn: "你将如何处理这些废物？"
+            },
+            {
+                word: "blast",
+                phonetic: "/blɑːst/",
+                meaning: "爆炸；气流",
+                type: "n., vi.",
+                example: "The blast destroyed several buildings.",
+                exampleCn: "爆炸摧毁了几座建筑。"
+            },
+            {
+                word: "consume",
+                phonetic: "/kənˈsjuːm/",
+                meaning: "消耗，耗尽",
+                type: "v.",
+                example: "This car consumes a lot of fuel.",
+                exampleCn: "这辆车���油量很大。"
+            },
+            {
+                word: "split",
+                phonetic: "/splɪt/",
+                meaning: "劈开；割裂；分裂",
+                type: "v., a.",
+                example: "The wood split into two pieces.",
+                exampleCn: "木头裂成两半。"
+            },
+            {
+                word: "spit",
+                phonetic: "/spɪt/",
+                meaning: "吐（等）；唾弃",
+                type: "v.",
+                example: "It's rude to spit in public.",
+                exampleCn: "在公共场所吐痰是不礼貌的。"
+            },
+            {
+                word: "spill",
+                phonetic: "/spɪl/",
+                meaning: "溢出，溅出，倒出",
+                type: "v.",
+                example: "Be careful not to spill your coffee.",
+                exampleCn: "小心别把咖啡洒出来。"
+            },
+            {
+                word: "slip",
+                phonetic: "/slɪp/",
+                meaning: "滑动，滑落；忽略",
+                type: "v.",
+                example: "She slipped on the ice.",
+                exampleCn: "她在冰上滑倒了。"
+            },
+            {
+                word: "slide",
+                phonetic: "/slaɪd/",
+                meaning: "滑动，滑落",
+                type: "v., n.",
+                example: "The children love to slide down the hill.",
+                exampleCn: "孩子们喜欢从山坡上滑下来。"
+            },
+            {
+                word: "bacteria",
+                phonetic: "/bækˈtɪəriə/",
+                meaning: "细菌",
+                type: "n.",
+                example: "Harmful bacteria can cause diseases.",
+                exampleCn: "有害细菌会导致疾病。"
+            },
+            {
+                word: "breed",
+                phonetic: "/briːd/",
+                meaning: "种，品种；繁殖，产仔",
+                type: "n., v.",
+                example: "They breed horses on their farm.",
+                exampleCn: "他们在农场养殖马匹。"
+            },
+            {
+                word: "budget",
+                phonetic: "/ˈbʌdʒɪt/",
+                meaning: "预算；编预算，作安排",
+                type: "n., v.",
+                example: "We need to budget carefully this month.",
+                exampleCn: "这个月我们需要仔细规划预算。"
+            },
+            {
+                word: "candidate",
+                phonetic: "/ˈkændɪdət/",
+                meaning: "候选人",
+                type: "n.",
+                example: "She is a strong candidate for the position.",
+                exampleCn: "她是这个职位的有力候选人。"
+            },
+            {
+                word: "campus",
+                phonetic: "/ˈkæmpəs/",
+                meaning: "校园",
+                type: "n.",
+                example: "The university has a beautiful campus.",
+                exampleCn: "这所大学有一个漂亮的校园。"
+            },
+            {
+                word: "liberal",
+                phonetic: "/ˈlɪbərəl/",
+                meaning: "慷慨的；丰富的；自由的",
+                type: "a.",
+                example: "He has very liberal views on education.",
+                exampleCn: "他对教育持非常开放的观点。"
+            },
+            {
+                word: "transform",
+                phonetic: "/trænsˈfɔːm/",
+                meaning: "转变，变革；变换",
+                type: "v.",
+                example: "Technology can transform our lives.",
+                exampleCn: "科技能改变我们的生活。"
+            },
+            {
+                word: "transmit",
+                phonetic: "/trænzˈmɪt/",
+                meaning: "传播，播送；传递",
+                type: "v.",
+                example: "Radio waves transmit signals through the air.",
+                exampleCn: "无线电波通过空气传输信号。"
+            },
+            {
+                word: "transplant",
+                phonetic: "/trænsˈplɑːnt/",
+                meaning: "移植",
+                type: "v.",
+                example: "The surgeon will transplant a new heart.",
+                exampleCn: "外科医生将移植一个新的心脏。"
+            },
+            {
+                word: "transport",
+                phonetic: "/trænˈspɔːt/",
+                meaning: "运输，运送",
+                type: "vt., n.",
+                example: "We need to transport these goods to the city.",
+                exampleCn: "我们需要把这些货物运到城市。"
+            },
+            {
+                word: "shift",
+                phonetic: "/ʃɪft/",
+                meaning: "转移；转动；转变",
+                type: "v.",
+                example: "The wind began to shift direction.",
+                exampleCn: "风向开始改变。"
+            },
+            {
+                word: "vary",
+                phonetic: "/ˈveəri/",
+                meaning: "变化，改变；使多样化",
+                type: "v.",
+                example: "Prices vary from shop to shop.",
+                exampleCn: "价格因商店而异。"
+            },
+            {
+                word: "vanish",
+                phonetic: "/ˈvænɪʃ/",
+                meaning: "消灭，不见",
+                type: "vi.",
+                example: "The sun vanished behind the clouds.",
+                exampleCn: "太阳消失在云层后面。"
+            },
+            {
+                word: "swallow",
+                phonetic: "/ˈswɒləʊ/",
+                meaning: "吞下，咽下",
+                type: "v., n.",
+                example: "Don't forget to swallow your medicine.",
+                exampleCn: "别忘了吃药。"
+            },
+            {
+                word: "suspicion",
+                phonetic: "/səˈspɪʃən/",
+                meaning: "怀疑，疑心",
+                type: "n.",
+                example: "He had a suspicion that something was wrong.",
+                exampleCn: "他怀疑有什么地方出错了。"
+            },
+            {
+                word: "suspicious",
+                phonetic: "/səˈspɪʃəs/",
+                meaning: "怀疑的，可疑的",
+                type: "a.",
+                example: "The police found his behavior suspicious.",
+                exampleCn: "警察觉得他的行为可疑。"
+            },
+            {
+                word: "mild",
+                phonetic: "/maɪld/",
+                meaning: "温暖的，暖和的；温柔的，味淡的",
+                type: "a.",
+                example: "We had a mild winter this year.",
+                exampleCn: "今年冬天很温和。"
+            },
+            {
+                word: "tender",
+                phonetic: "/ˈtendə/",
+                meaning: "温柔的；脆弱的",
+                type: "a.",
+                example: "She gave him a tender smile.",
+                exampleCn: "她给了他一个温柔的微笑。"
+            },
+            {
+                word: "nuisance",
+                phonetic: "/ˈnjuːsns/",
+                meaning: "损害，妨害，讨厌（的人或事物）",
+                type: "n.",
+                example: "Noise pollution is a nuisance in big cities.",
+                exampleCn: "噪音污染是大城市的一个讨厌问题。"
+            },
+            {
+                word: "insignificant",
+                phonetic: "/ˌɪnsɪɡˈnɪfɪkənt/",
+                meaning: "无意义的，无足轻重的；无价值的",
+                type: "a.",
+                example: "These changes are insignificant.",
+                exampleCn: "这些变化微不足道。"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const showMeaningBtn = document.querySelector('.show-meaning');
+            const meaningDiv = document.querySelector('.meaning');
+            const nextWordBtn = document.querySelector('.next-word');
+            const soundBtn = document.querySelector('.sound-btn');
+            let currentWordIndex = 0;
+
+            // 初始化语音合成
+            let synth = window.speechSynthesis;
+            let voices = [];
+
+            function loadVoices() {
+                voices = synth.getVoices();
+            }
+
+            // 加载声音列表
+            loadVoices();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+
+            // 更新单词卡片内容
+            function updateWordCard() {
+                const currentWord = vocabularyList[currentWordIndex];
+                document.querySelector('.word').textContent = currentWord.word;
+                document.querySelector('.phonetic').textContent = currentWord.phonetic;
+                document.querySelector('.chinese').textContent = `${currentWord.type} ${currentWord.meaning}`;
+                document.querySelector('.example').textContent = currentWord.example;
+                document.querySelector('.example-cn').textContent = currentWord.exampleCn;
+                
+                // 更新进度
+                document.querySelector('.word-progress span').textContent = 
+                    `${currentWordIndex + 1}/${vocabularyList.length}`;
+                
+                // 重置释义显示状态
+                meaningDiv.classList.add('hidden');
+                showMeaningBtn.innerHTML = '<i class="fas fa-eye"></i> 显示释义';
+            }
+            
+            showMeaningBtn.addEventListener('click', function() {
+                meaningDiv.classList.toggle('hidden');
+                this.innerHTML = meaningDiv.classList.contains('hidden') 
+                    ? '<i class="fas fa-eye"></i> 显示释义'
+                    : '<i class="fas fa-eye-slash"></i> 隐藏释义';
+            });
+            
+            nextWordBtn.addEventListener('click', function() {
+                currentWordIndex = (currentWordIndex + 1) % vocabularyList.length;
+                updateWordCard();
+            });
+            
+            soundBtn.addEventListener('click', async function() {
+                const currentWord = vocabularyList[currentWordIndex];
+                
+                // 尝试使用���线API播放音频
+                try {
+                    // 使用有道词典API获取发音
+                    const audio = new Audio(`https://dict.youdao.com/dictvoice?audio=${currentWord.word}&type=2`);
+                    await audio.play();
+                } catch (error) {
+                    console.log('在线音频播放失败，使用本地语音合成');
+                    
+                    // 如果在线音频失败，使用本地语音合成作为备选
+                    synth.cancel();
+                    const utterance = new SpeechSynthesisUtterance(currentWord.word);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.8;
+                    utterance.pitch = 1;
+
+                    const englishVoices = voices.filter(voice => 
+                        voice.lang.includes('en') && voice.name.includes('Google')
+                    );
+                    
+                    if (englishVoices.length > 0) {
+                        utterance.voice = englishVoices[0];
+                    }
+
+                    synth.speak(utterance);
+                }
+            });
+
+            // 初始化显示第一个单词
+            updateWordCard();
+        });
+    </script>
+    <script>
+        function handleLogout() {
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('username');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html> 

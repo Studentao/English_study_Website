@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .forgot-password {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #4a90e2;
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .modal-body {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .credential-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #f5f5f5;
+            border-radius: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translate(-50%, -60%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="wave-background" aria-hidden="true">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    
+    <main class="login-container animate__animated animate__fadeIn">
+        <header class="login-header">
+        
+            <h1>灰灰英语小课堂</h1>
+            <p class="welcome-text">开启你的英语学习之旅</p>
+        </header>
+        
+        <form class="login-form glass-effect" id="loginForm" onsubmit="return handleLogin(event)">
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username"
+                        placeholder="请输入用户名"
+                        autocomplete="username"
+                        required
+                        aria-required="true"
+                        class="custom-input"
+                    >
+                </div>
+                <div class="error-message" aria-live="polite"></div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="请输入密码"
+                        autocomplete="current-password"
+                        required
+                        aria-required="true"
+                        class="custom-input"
+                    >
+                </div>
+                <div class="error-message" aria-live="polite"></div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="login-button">
+                    <span class="button-text">登录</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button type="button" class="forgot-password" onclick="showCredentials()">
+                    忘记密码？
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <div class="modal" id="credentialsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">登录信息</h3>
+                <button class="close-modal" onclick="hideCredentials()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="credential-item">
+                    <strong>默认账号：</strong>admin
+                </div>
+                <div class="credential-item">
+                    <strong>默认密码：</strong>123
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showCredentials() {
+            document.getElementById('credentialsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        }
+
+        function hideCredentials() {
+            document.getElementById('credentialsModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('credentialsModal');
+            if (event.target == modal) {
+                hideCredentials();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessages = document.querySelectorAll('.error-message');
+            const loginButton = document.querySelector('.login-button');
+            
+            errorMessages.forEach(msg => msg.textContent = '');
+            loginButton.classList.add('loading');
+            
+            setTimeout(() => {
+                if (username === 'admin' && password === '123') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('username', username);  // 保存用户名
+                    loginButton.classList.add('success');
+                    setTimeout(() => {
+                        window.location.href = 'study.html';
+                    }, 500);
+                } else {
+                    loginButton.classList.remove('loading');
+                    errorMessages[0].textContent = '用户名或密码错误';
+                    document.querySelector('.login-form').classList.add('shake');
+                    setTimeout(() => {
+                        document.querySelector('.login-form').classList.remove('shake');
+                    }, 500);
+                }
+            }, 200);
+            
+            return false;
+        }
+    </script>
+</body>
+</html> 
