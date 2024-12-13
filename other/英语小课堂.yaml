@@ -1,0 +1,206 @@
+ab_version: 1.0.6
+app_desc: ai分析英语学习情况
+app_instance_config:
+  audit_instructions_result: []
+  avatar_id: ''
+  avatar_path: ''
+  desc: ai分析英语学习情况
+  digitalhuman_config:
+    enable: false
+    enable_avatar: false
+    figureId: ''
+    isAutoPlay: true
+    ttsPer: ''
+    ttsPitch: 5
+    ttsSpeed: 5
+    ttsVolume: 5
+  enhance_instructions: ，指令：在英语小课堂中，你的任务是通过AI分析学生的英语学习情况，并提供个性化的学习建议和指导。你需要能够评估学生的英语水平，识别他们的学习需求，并提供相应的学习资源和方法。
+  history_chat_rounds: 2
+  instruction_template:
+  - detail: 0
+    format: 0
+    mode: normal
+    text: '# 角色任务
+
+      在英语小课堂中，你的任务是通过AI分析学生的英语学习情况，并提供个性化的学习建议和指导。你需要能够评估学生的英语水平，识别他们的学习需求，并提供相应的学习资源和方法。
+
+
+      # 工具能力
+
+      1. AI分析能力
+
+      你需要具备强大的AI分析能力，能够分析学生的英语学习情况，包括语法、词汇、发音等方面，并给出准确的评估和建议。
+
+      2. 个性化学习建议
+
+      根据学生的学习情况和需求，你需要能够生成个性化的学习建议，包括学习资源、学习方法、练习题目等。
+
+
+      # 要求与限制
+
+      1. 准确性
+
+      你的分析和建议必须准确可靠，能够真正帮助学生提高英语水平。
+
+      2. 互动性
+
+      你需要具备良好的互动性，能够与学生进行流畅的沟通，了解他们的学习需求和困惑，并提供相应的指导。
+
+      3. 针对性
+
+      你的指导必须针对学生的具体情况进行个性化指导，不得一刀切地给出通用建议。
+
+
+      # 示例对话场景
+
+      学生：老师，我觉得我的英语语法很差，该怎么办？
+
+      角色：在英语小课堂中，你可以告诉我你的具体情况和需要提高的方面。我会通过AI分析你的英语水平，并给出个性化的学习建议和资源。放心，我会一直陪伴你，帮助你提高英语能力。'
+    type: text
+    version: 1
+  instructions: ''
+  intervention: {}
+  max_rounds: 2
+  memory:
+    chunk:
+      enable: false
+    enable: false
+  model_type: ERNIE-3.5-8K
+  name: 英语小课堂
+  prologue: 请输入你的需求
+  publish_config:
+    show_memory: false
+    show_process: false
+    show_rag_reference: true
+  query_follow_up:
+    query_param:
+      model_name: Qianfan-Agent-Speed-8K
+    query_type: CLOSED
+  rag:
+  - param:
+      custom_desc: ''
+      dataset_ids: []
+      enable_baidu_search: false
+      enable_custom_desc: false
+      retrieval_order: COMBINED
+      retrieval_strategy: Advanced
+      threshold: 0.4
+      top_k: 6
+    type: dataset
+  - param:
+      databases: []
+    type: database
+  - param:
+      stop:
+        enable: false
+        response_format: null
+        response_template: null
+    type: config
+  suggest_query:
+  - 你对英语哪方面最感兴趣？
+  - 你希望在英语学习中获得哪些方面的帮助？
+  - 请描述一下你的英语学习现状和需求？
+  tools:
+  - artifact_id: ca18bd24-bd85-401a-b80c-b30d218f6735
+    code: baidu_search_with_model
+    custom_desc: 百度AI搜索（BaiduAISearch），原百度搜索总结。为百度领先的搜索能力结合大模型技术，可提供结合全网实时信息进行智能回复，可支撑各行业丰富的场景应用。该组件支持付费后通过API独立调用，API能力有：自定义人设、模型选择及配置、问题改写（包括时效和多轮两种方式，以增强搜索效果）、搜索范围配置（可选择搜索的模态、站点范围和发布时间）、自定义参考链接条数等等，此外，该API拥有优秀的性能表现和高可用性，以及全面的内容安全审核，保证处于合规红线之上。更多详情可通过API调用页面查看。
+    delete: false
+    desc: 百度AI搜索（BaiduAISearch），原百度搜索总结。为百度领先的搜索能力结合大模型技术，可提供结合全网实时信息进行智能回复，可支撑各行业丰富的场景应用。该组件支持付费后通过API独立调用，API能力有：自定义人设、模型选择及配置、问题改写（包括时效和多轮两种方式，以增强搜索效果）、搜索范围配置（可选择搜索的模态、站点范围和发布时间）、自定义参考链接条数等等，此外，该API拥有优秀的性能表现和高可用性，以及全面的内容安全审核，保证处于合规红线之上。更多详情可通过API调用页面查看。
+    enable_custom_desc: false
+    from_market: true
+    icon: https://agi-dev-platform-sdk-prod.bj.bcebos.com/icons/2024-11/84efef598f5e3b66710663367910118a.png
+    ignore_upgrade_artifact_id: ''
+    is_stop_tool: false
+    kind: tool
+    model_config: null
+    name: 百度AI搜索
+    official: true
+    payment_config: {}
+    replaceComponent: null
+    response_format: null
+    response_template: null
+    status: published
+    type: baidu_search_with_model
+  - artifact_id: 01cf4e85-8554-4b96-a8c6-f4330db8c354
+    code: image
+    custom_desc: 文生图（Text2Image）基于文心大模型，可以根据用户输入的文本，自动创作不限定风格的图，为内容创作者提供灵感和高质量配图。API调用时对应“AI作画-高级版”。
+    delete: false
+    desc: 文生图（Text2Image）基于文心大模型，可以根据用户输入的文本，自动创作不限定风格的图，为内容创作者提供灵感和高质量配图。API调用时对应“AI作画-高级版”。
+    enable_custom_desc: false
+    from_market: true
+    icon: https://agi-dev-platform-sdk-prod.bj.bcebos.com/icons/2024-09/a46704344fd2135d036008c8fd6842e6.png
+    ignore_upgrade_artifact_id: ''
+    is_stop_tool: false
+    kind: tool
+    model_config: null
+    name: 文生图
+    official: true
+    payment_config: {}
+    replaceComponent: null
+    response_format: null
+    response_template: null
+    status: published
+    type: image
+  - artifact_id: 778dc9b0-f0d0-49ea-b95b-b5e07a647130
+    code: image_understand
+    custom_desc: 图像内容理解 （ImageUnderstand），上传图片后，输出对图片的理解的文本信息。
+    delete: false
+    desc: 图像内容理解 （ImageUnderstand），上传图片后，输出对图片的理解的文本信息。
+    enable_custom_desc: false
+    from_market: true
+    icon: https://agi-dev-platform-sdk-prod.bj.bcebos.com/icons/2024-09/51636faa3ba3c7003e1439d40149a0ce.png
+    ignore_upgrade_artifact_id: ''
+    is_stop_tool: false
+    kind: tool
+    model_config: null
+    name: 图像内容理解
+    official: true
+    payment_config: {}
+    replaceComponent: null
+    response_format: null
+    response_template: null
+    status: published
+    type: image_understand
+app_name: 英语小课堂
+app_page_view: 0
+avatar: ''
+input_length: 2000
+is_like: false
+is_public: false
+like_count: 0
+model:
+  is_deep_thought: true
+  model_config:
+    temperature: 0.01
+    top_p: 0.01
+  model_id: f6d0e3ec-5015-4c2a-81f4-c91a8e2fa051
+  model_name: ERNIE-3.5-8K
+  provider: official
+publish_at: 1733909831
+publish_num: 2
+published_is_latest: 2
+publisher_name: 小凹同学喂
+rag_model:
+  model_config:
+    temperature: 0.01
+    top_p: 0.01
+  model_id: 78108f40-4512-4a9a-9fe9-5407e2a6a04d
+  model_name: Qianfan-Agent-Speed-8K
+  provider: official
+released_channel:
+- name: wx_program
+  url: http://agi-dev-platform-bos.bj.bcebos.com/agi-dev-platform-bos/wx_program/qrcode/appCYN8QzRb95hOd4qxyKEI.png?authorization=bce-auth-v1%2FALTAKGa8m4qCUasgoljdEDAzLm%2F2024-12-11T09%3A37%3A12Z%2F-1%2Fhost%2F3e4685aa01a82c8ea7276fcf758de9a441c370ee88fe706b375c3abd1193937a
+- name: web
+  url: https://appbuilder.baidu.com/s/fqQQVE3O
+reminder_type: no_reminder
+suggest_query:
+- 你对英语哪方面最感兴趣？
+- 你希望在英语学习中获得哪些方面的帮助？
+- 请描述一下你的英语学习现状和需求？
+template_id: 831cec36-e8e1-464f-b802-38ea6dbc45b6
+template_name: assistant
+template_values:
+  actions: []
+  inputs: {}
+type: chat
+web_token: bce-v3/ALTAK-LOavmf3fHWhWGDctypi40/4df175261a431e0ba29886c74f502cce3af6dfe5

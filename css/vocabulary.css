@@ -1,0 +1,196 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'ZCOOL XiaoWei', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* 导航栏样式 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-logo .site-name {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.back-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: transparent;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+/* 主容器样式 */
+.vocabulary-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* 单词卡片样式 */
+.word-card {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.word-progress {
+    text-align: right;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.word-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.word {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.phonetic {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.controls {
+    margin: 1rem 0;
+}
+
+.sound-btn {
+    background: none;
+    border: none;
+    color: #4a90e2;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.meaning {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+.meaning.hidden {
+    display: none;
+}
+
+.chinese {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.example {
+    color: #4a90e2;
+    margin-bottom: 0.5rem;
+}
+
+.example-cn {
+    color: #666;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.show-meaning {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.next-word {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 学习进度样式 */
+.study-progress {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .word {
+        font-size: 2rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+} 
